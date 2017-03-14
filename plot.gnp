@@ -1,0 +1,2 @@
+splot 'set view map
+CHphiDensity.dat' matrix nonuniform notitle

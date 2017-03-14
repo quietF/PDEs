@@ -37,7 +37,7 @@ public class CahnHiliard {
 				d2phi_ij = phi[iPlus[i]][j]+phi[iMinus[i]][j]+phi[i][iPlus[j]]+
 						phi[i][iMinus[j]]-4*phi_ij;
 				d2phi_ij/=(dx*dx);
-				mu[i][j] = a*phi_ij+a*phi_ij*phi_ij*phi_ij-kappa*d2phi_ij;
+				mu[i][j] = -a*phi_ij+a*phi_ij*phi_ij*phi_ij-kappa*d2phi_ij;
 			}
 	}
 	
@@ -85,11 +85,12 @@ public class CahnHiliard {
 		return free;
 	}
 	
-	public void evolve(String outFile, String freeFile, int dataPoints, int nt) throws FileNotFoundException, UnsupportedEncodingException{
+	public void evolve(String outFile, String freeFile, int dataPoints, int nt) 
+			throws FileNotFoundException, UnsupportedEncodingException{
 		
 		PrintWriter writer2 = new PrintWriter(freeFile, "UTF-8");
 		for(int t=0; t<nt; t++){
-			if(t%dataPoints==0){
+			if(t%dataPoints==0 && t!=0){
 				PrintWriter writer1 = new PrintWriter(outFile, "UTF-8");
 				writer1.printf(N + " ");
 				for(int j=0; j<N; j++) writer1.printf(j + " ");
@@ -101,7 +102,7 @@ public class CahnHiliard {
 					writer1.println();
 				}
 				writer1.close();
-				writer2.println(t%dataPoints + " " + this.totalFree());
+				writer2.println((int)(t/dataPoints) + " " + this.totalFree());
 			}
 			this.setNew();
 		}
@@ -111,9 +112,9 @@ public class CahnHiliard {
 	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("HOLA");
-		CahnHiliard CH = new CahnHiliard(50, 0.5);
+		CahnHiliard CH = new CahnHiliard(50, -0.5);
 		int dataPoints = 1000;
-		CH.evolve("CHphiDensity.dat", "CHfreeEnergyDensity.dat", dataPoints, 100000);
+		CH.evolve("CHphiDensity.dat", "CHfreeEnergyDensity.dat", dataPoints, 10000000);
 	}
 	
 }
