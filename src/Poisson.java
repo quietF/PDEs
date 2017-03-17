@@ -63,27 +63,34 @@ public class Poisson {
 		phi = phiNew;
 	}
 	
-	public void evolve(String phiFile, String freeFile, int dataPoints, int nt) 
+	public void evolve(String phiFile) 
 			throws FileNotFoundException, UnsupportedEncodingException{
 		
-		for(int t=0; t<nt; t++){
-			if(t%dataPoints==0 && t!=0){
+		//for(int t=0; t<nt; t++){
+			//if(t%dataPoints==0 && t!=0){
 				PrintWriter writer1 = new PrintWriter(phiFile, "UTF-8");
 				for(int i=0; i<N; i++){
 					for(int j=0; j<N; j++)
-						writer1.println(i + " " + j + " " + phi[i][j]);
+						for(int k=0; k<N; k++){
+							this.getE_ijk(i, j, k);
+							writer1.println(i + " " + j + " " + k +  " " + 
+									rho[i][j][k] + " " + phi[i][j][k] + " " +
+									E_ijk[0] + " " + E_ijk[1] + " " + E_ijk[2]);
+						}
 					writer1.println();
 				}
 				writer1.close();
-			}
-			this.setNew();
-		}
+			//}
+			//this.setNew();
+		//}
 		
 	}
 	
 	public static void main(String[] args) 
 			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("HOLA");
+		Poisson poiss = new Poisson(100, 0.0);
+		poiss.evolve("Poisson.dat");
 		/*Poisson poiss = new Poisson(100, 0.0);
 		int dataPoints = 1000;
 		String outPhi = "CHphiDensity.dat", 
