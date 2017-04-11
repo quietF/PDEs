@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 public class CahnHiliard {
 	
-	private final double a=0.1, M=0.1, kappa=0.01, noise=0.01,
+	private final double a=0.1, M=0.1, kappa=0.1, noise=0.1,
 			dx = 0.5, dt = 0.1;
 	private int N=100;
 	private int[] iPlus = new int[N], iMinus = new int[N];
@@ -41,8 +41,8 @@ public class CahnHiliard {
 						phi[i][iMinus[j]]-4.0*phi_ij;
 				dphi_ij/=(dx*dx);
 				mu[i][j] = -a*phi_ij+a*phi_ij*phi_ij*phi_ij-kappa*dphi_ij;
-				f[i][j] = -0.5*a*phi_ij*phi_ij+0.25*a*phi_ij*phi_ij*phi_ij*phi_ij+
-						0.5*kappa*(dphi_i*dphi_i+dphi_j*dphi_j);
+				f[i][j] = dx*dx*(-0.5*a*phi_ij*phi_ij+0.25*a*phi_ij*phi_ij*phi_ij*phi_ij+
+						0.5*kappa*(dphi_i*dphi_i+dphi_j*dphi_j));
 			}
 	}
 	
@@ -113,10 +113,10 @@ public class CahnHiliard {
 	public static void main(String[] args) 
 			throws FileNotFoundException, UnsupportedEncodingException {
 		System.out.println("HOLA");
-		CahnHiliard CH = new CahnHiliard(100, 0.0);
+		CahnHiliard CH = new CahnHiliard(100, 0.5);
 		int dataPoints = 1000;
-		String outPhi = "CHphiDensity.dat", 
-				outFree = "CHfreeEnergyDensity.dat";
+		String outPhi = "CHphiDensity0.5.dat", 
+				outFree = "CHfreeEnergyDensity0.5.dat";
 		CH.evolve(outPhi, outFree, dataPoints, 10000000);
 	}
 	

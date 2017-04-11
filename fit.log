@@ -507,3 +507,50 @@ correlation matrix of the fit parameters:
                a      b      
 a               1.000 
 b              -0.982  1.000 
+
+
+*******************************************************************************
+Fri Apr  7 16:26:08 2017
+
+
+FIT:    data read from 'Poisson_10-3.dat' u (log(sqrt((50.-$1)**2.+(50.-$2)**2.+(50.-$3)**2.))):(log($5))
+        format = x:z
+	y range restricted to [0.00000 : 2.00000]
+        #datapoints = 1742
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 86319.9           delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 1.40074
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 0.23053
+rel. change during last iteration : -2.10941e-07
+
+degrees of freedom    (FIT_NDF)                        : 1740
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0115104
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000132488
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = -1.09554         +/- 0.0008439    (0.07703%)
+b               = -2.48856         +/- 0.001443     (0.05799%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.982  1.000 

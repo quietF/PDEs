@@ -7,7 +7,8 @@ public class Poisson {
 	private final double eps=1., dx = 1.;
 	private int N=100;
 	private int[] iPlus = new int[N+1], iMinus = new int[N+1];
-	private double[][][] phi = new double[N+1][N+1][N+1];
+	private double[][][] phi = new double[N+1][N+1][N+1], 
+			phiNew = new double[N+1][N+1][N+1];
 	private double[][][] rho = new double[N+1][N+1][N+1];
 	private double[] E_ijk = new double[3];
 	
@@ -46,6 +47,22 @@ public class Poisson {
 		E_ijk[0] = -(phi[iPlus[i]][j][k]-phi[iMinus[i]][j][k])/(2.*dx); 
 		E_ijk[1] = -(phi[i][iPlus[j]][k]-phi[i][iMinus[j]][k])/(2.*dx); 
 		E_ijk[2] = -(phi[i][j][iPlus[k]]-phi[i][j][iMinus[k]])/(2.*dx);
+	}
+	
+	private void setNewJac(){
+		
+		phiNew = new double[N+1][N+1][N+1];
+		
+		for(int i=1; i<N; i++)
+			for(int j=1; j<N; j++)
+				for(int k=1; k<N; k++){
+					phiNew[i][j][k] = (phi[iPlus[i]][j][k]+phi[iMinus[i]][j][k]+
+							phi[i][iPlus[j]][k]+phi[i][iMinus[j]][k]+
+							phi[i][j][iPlus[k]]+phi[i][j][iMinus[k]]+
+							rho[i][j][k]/eps)/6.0;
+				}
+		
+		phi = phiNew;
 	}
 	
 	private void setNew(double omega){
@@ -119,7 +136,7 @@ public class Poisson {
 			throws FileNotFoundException, UnsupportedEncodingException{
 		
 		PrintWriter writer1 = new PrintWriter(SORfile, "UTF-8");
-		int Nomega = 100;
+		int Nomega = 50;
 		double omega, d_omega = 1./(double)(Nomega);
 		int nt = 0;
 		for(int w=0; w<Nomega; w++){
